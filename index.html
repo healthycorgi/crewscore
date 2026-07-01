@@ -532,6 +532,7 @@ function renderAll() {
       : rank===3 ? '<span class="rank-medal bronze">3</span>'
       : `<span class="rank-num">${rank}</span>`;
     const q1c = m.q1>0?'pos':m.q1<0?'neg':'zero';
+    const pc  = m.penalty>0?'pos':m.penalty<0?'neg':'zero';
     const tc  = m.total>0?'pos':m.total<0?'neg':'zero';
     const tr = document.createElement('tr');
     if (m.total <= -2) tr.style.background = 'rgba(226,101,84,0.08)';
@@ -539,6 +540,7 @@ function renderAll() {
       <td class="rank-cell">${rh}</td>
       <td class="name-cell">${m.name}${m.total<=-2?' ⚠️':''}</td>
       <td class="score-cell ${q1c}">${m.q1>=0?'+':''}${m.q1}</td>
+      <td class="score-cell ${pc}">${m.penalty>=0?'+':''}${m.penalty}</td>
       <td class="total-cell ${tc}">${m.total>=0?'+':''}${m.total}</td>
     `;
     tbody.appendChild(tr);
