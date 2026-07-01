@@ -351,12 +351,12 @@ footer {
       <div class="mini-card">
         <div class="mini-card-emoji">🏆</div>
         <div class="mini-card-val" id="topScorer">—</div>
-        <div class="mini-card-label">상점 MVP</div>
+        <div class="mini-card-label">상벌점 MVP</div>
       </div>
       <div class="mini-card">
         <div class="mini-card-emoji">⭐</div>
         <div class="mini-card-val" id="totalPoints">—</div>
-        <div class="mini-card-label">누적 상점 합계</div>
+        <div class="mini-card-label">누적 상벌점 합계</div>
       </div>
       <div class="mini-card">
         <div class="mini-card-emoji">⚠️</div>
@@ -375,7 +375,7 @@ footer {
 
 <!-- ── PC3 : 2분기 상점 순위 ── -->
 <section class="section-chart">
-  <div class="section-title chart-title">누적 상점 순위</div>
+  <div class="section-title chart-title">누적 상벌점 순위</div>
   <div class="section-body chart-body">
     <div class="chart-container">
       <canvas id="rankChart"></canvas>
@@ -446,14 +446,14 @@ function renderAll() {
   const sorted = [...raw].sort((a,b) => b.total - a.total);
   let rankMap = {};
   sorted.forEach((m,i) => {
-    if (i===0 || sorted[i-1].q1 !== m.q1) rankMap[m.name] = i+1;
+    if (i===0 || sorted[i-1].total !== m.total) rankMap[m.name] = i+1;
     else rankMap[m.name] = rankMap[sorted[i-1].name];
   });
 
   if (sorted.length > 0) {
     document.getElementById('miniStats').style.display = 'flex';
     document.getElementById('topScorer').textContent = sorted[0].name;
-    document.getElementById('totalPoints').textContent = '+' + sorted[0].q1 + '점';
+    document.getElementById('totalPoints').textContent = (sorted[0].total>=0?'+':'') + sorted[0].total + '점';
     document.getElementById('dangerCount').textContent = raw.filter(m=>m.total<=-2).length + '명';
   }
 
@@ -489,8 +489,8 @@ function renderAll() {
     data: {
       labels: chartData.map(m => m.name),
       datasets: [{
-        label: '누적 상점',
-        data: chartData.map(m => m.q1),
+        label: '상벌점 합계',
+        data: chartData.map(m => m.total),
         backgroundColor: chartData.map((_,i) =>
           i===0 ? '#FFD700' : i===1 ? '#C0C0C0' : i===2 ? '#CD7F32' : '#7598C7cc'
         ),
@@ -504,7 +504,7 @@ function renderAll() {
       maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: c => `누적 상점: ${c.parsed[isMobile?'x':'y']}점` } }
+        tooltip: { callbacks: { label: c => `상벌점 합계: ${c.parsed[isMobile?'x':'y']}점` } }
       },
       scales: {
         x: {
