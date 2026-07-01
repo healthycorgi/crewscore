@@ -331,7 +331,7 @@ footer {
     <div class="search-result" id="searchResult">
       <div class="result-header">
         <span class="result-name" id="resultName"></span>
-        <div class="result-rank-badge">2분기 <span id="resultRank"></span>위 🏅</div>
+        <div class="result-rank-badge">누적 상점 <span id="resultRank"></span>위 🏅</div>
       </div>
       <div class="result-stats">
         <div class="r-stat">
@@ -351,7 +351,7 @@ footer {
       <div class="mini-card">
         <div class="mini-card-emoji">🏆</div>
         <div class="mini-card-val" id="topScorer">—</div>
-        <div class="mini-card-label">이번 분기 MVP</div>
+        <div class="mini-card-label">상점 MVP</div>
       </div>
       <div class="mini-card">
         <div class="mini-card-emoji">⭐</div>
@@ -406,7 +406,7 @@ footer {
 
 <footer>
   <div class="footer-txt">
-    <strong>🐕 헬시코기 크루</strong> &nbsp;·&nbsp; 2026년 2분기 상벌점 현황
+    <strong>🐕 헬시코기 크루</strong> &nbsp;·&nbsp; 상벌점 현황
   </div>
 </footer>
 
@@ -453,8 +453,8 @@ function renderAll() {
   if (sorted.length > 0) {
     document.getElementById('miniStats').style.display = 'flex';
     document.getElementById('topScorer').textContent = sorted[0].name;
-    document.getElementById('totalPoints').textContent = '+' + raw.reduce((s,m)=>s+m.q1,0) + '점';
-    document.getElementById('dangerCount').textContent = raw.filter(m=>m.total<=-3).length + '명';
+    document.getElementById('totalPoints').textContent = '+' + sorted[0].q1 + '점';
+    document.getElementById('dangerCount').textContent = raw.filter(m=>m.total<=-2).length + '명';
   }
 
   // 검색
@@ -534,10 +534,10 @@ function renderAll() {
     const q1c = m.q1>0?'pos':m.q1<0?'neg':'zero';
     const tc  = m.total>0?'pos':m.total<0?'neg':'zero';
     const tr = document.createElement('tr');
-    if (m.total <= -3) tr.style.background = 'rgba(226,101,84,0.08)';
+    if (m.total <= -2) tr.style.background = 'rgba(226,101,84,0.08)';
     tr.innerHTML = `
       <td class="rank-cell">${rh}</td>
-      <td class="name-cell">${m.name}${m.total<=-3?' ⚠️':''}</td>
+      <td class="name-cell">${m.name}${m.total<=-2?' ⚠️':''}</td>
       <td class="score-cell ${q1c}">${m.q1>=0?'+':''}${m.q1}</td>
       <td class="total-cell ${tc}">${m.total>=0?'+':''}${m.total}</td>
     `;
